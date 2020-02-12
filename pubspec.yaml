@@ -21,15 +21,21 @@ dependencies:
     sdk: flutter
   firebase_core: ^0.4.0+9
   firebase_analytics: ^5.0.2 # TODO: We will need to decide whether we want ti use Google Analytics
-  firebase_auth: ^0.14.0+5
-
+  firebase_auth: ^0.15.4
+  flutter_auth_ui: ^0.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
+  flutter_signin_button: ^1.0.0
+  google_sign_in: ^4.1.1
+  provider: ^3.1.0
+
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  flutter_localizations:
     sdk: flutter
 
 

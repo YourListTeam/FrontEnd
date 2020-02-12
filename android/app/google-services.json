@@ -30,6 +30,13 @@
             {
               "client_id": "974292495862-6qb3jqgr7ebk9dosokv2jopsfr68jjpt.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "974292495862-pqphj6i4o8qqu4v2ghu7i3fljgoof6r8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.yourlistfrontend.yourlistflutterapp"
+              }
             }
           ]
         }
