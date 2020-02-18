@@ -1,4 +1,5 @@
 import 'package:your_list_flutter_app/services/auth.dart';
+import 'package:your_list_flutter_app/res/val/colors.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -24,10 +25,10 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     double c_width = MediaQuery.of(context).size.width*0.50;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.blue[400],
+        backgroundColor: AppColors.mainAppColor,
         elevation: 0.0,
         title: Text('Sign up'),
         leading: new Container(
@@ -46,7 +47,7 @@ class _RegisterState extends State<Register> {
         ),
         actions: <Widget>[
           FlatButton.icon(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.account_circle),
             label: Text('Sign In'),
             onPressed: () => widget.toggleView(),
           ),
@@ -76,10 +77,10 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                  color: Colors.blue[400],
+                  color: AppColors.mainButtonColor,
                   child: Text(
                     'Register',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: AppColors.buttonTextColor),
                   ),
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {

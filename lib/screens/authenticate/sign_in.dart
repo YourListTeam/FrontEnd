@@ -1,5 +1,6 @@
 import 'package:your_list_flutter_app/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:your_list_flutter_app/res/val/colors.dart';
 
 class SignIn extends StatefulWidget {
 
@@ -26,10 +27,10 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     double c_width = MediaQuery.of(context).size.width*0.50;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.blue[400],
+        backgroundColor: AppColors.mainAppColor,
         elevation: 0.0,
         title: Text('Sign in'),
         leading: new Container(
@@ -48,7 +49,7 @@ class _SignInState extends State<SignIn> {
         ),
         actions: <Widget>[
           FlatButton.icon(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.account_circle),
             label: Text('Register'),
             onPressed: () => widget.toggleView(),
           ),
@@ -77,10 +78,10 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.lightBlue[400],
+                color: AppColors.mainButtonColor,
                 child: Text(
                   'Sign In',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: AppColors.buttonTextColor),
                 ),
                 onPressed: () async {
                   if(_formKey.currentState.validate()){

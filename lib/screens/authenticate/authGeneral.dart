@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 import 'package:flutter/material.dart';
+import 'package:your_list_flutter_app/res/val/colors.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -12,6 +13,7 @@ GoogleSignIn _googleSignIn = GoogleSignIn(//  scopes: [
 //    'https://www.googleapis.com/auth/contacts.readonly',
 //  ],
 );
+//GoogleSignInOptions gso = new G
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 
@@ -66,7 +68,9 @@ class _GeneralAuthState extends State<GeneralAuth>{
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
+        backgroundColor: AppColors.mainAppColor,
         centerTitle: true,
         title: const Text('Your List'),
       ),
@@ -89,7 +93,7 @@ class _GeneralAuthState extends State<GeneralAuth>{
               icon: Icons.email,
               text: 'Sign-in with email',
               onPressed: () => widget.toggleTypeToEmail(),
-              backgroundColor: Colors.blueGrey[700],
+              backgroundColor: AppColors.registerButtonEmailColor,
             ),
 
           ],
