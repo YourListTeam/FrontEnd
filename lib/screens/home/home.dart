@@ -61,9 +61,11 @@ class Home extends StatelessWidget {
 //          ),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
-              final responce = Provider.of<UserService>(context).getUser("d4cca862-6a4a-4020-9034-da6e4fcc12c4");
+              var theMap = new Map<dynamic, dynamic>();
+              theMap["UUID"] = "d4cca862-6a4a-4020-9034-da6e4fcc12c4";
+              final responce = Provider.of<UserService>(context).getUser(theMap);
               AsyncSnapshot<http.Response> snapshot;
-              responce.then((value) => print(value.body) );
+              responce.then((value) => print(value.body));
             },
             tooltip: 'test responce',
             child: Icon(Icons.add),

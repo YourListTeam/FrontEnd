@@ -23,12 +23,10 @@ class _$UserService extends UserService {
   }
 
   @override
-  Future<Response> getUser(String uuid) {
+  Future<Response> getUser(Map body) {
     final $url = '/users';
-    final $params = <String, dynamic>{'UUID': uuid};
-    final $headers = {'UUID': 'uuid'};
-    final $request = Request('GET', $url, client.baseUrl,
-        parameters: $params, headers: $headers);
+    final $body = body;
+    final $request = Request('GET', $url, client.baseUrl, body: $body);
     return client.send<dynamic, dynamic>($request);
   }
 
