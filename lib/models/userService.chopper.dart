@@ -31,17 +31,10 @@ class _$UserService extends UserService {
   }
 
   @override
-  Future<Response> postPost(Map<String, dynamic> body) {
+  Future<Response> postUser(Map<String, dynamic> body) {
     final $url = '/users';
     final $body = body;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
-  Future<Response> getPosts() {
-    final $url = '/users';
-    final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 }

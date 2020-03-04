@@ -19,7 +19,7 @@ abstract class UserService extends ChopperService {
 
   // Put & Patch requests are specified the same way - they must contain the @Body
   @Post()
-  Future<Response> postPost(
+  Future<Response> postUser(
       @Body() Map<String, dynamic> body,
       );
 
@@ -39,8 +39,5 @@ abstract class UserService extends ChopperService {
     // The generated class with the ChopperClient passed in
     return _$UserService(client);
   }
-  // These ones can be used for testing
-  @Get()
-  Future<Response> getPosts();
 
 }
