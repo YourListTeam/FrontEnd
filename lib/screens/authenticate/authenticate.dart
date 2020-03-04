@@ -1,35 +1,25 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:your_list_flutter_app/screens/authenticate/authGeneral.dart';
-import 'package:your_list_flutter_app/screens/authenticate/register.dart';
-import 'package:your_list_flutter_app/screens/authenticate/sign_in.dart';
+import 'package:your_list_flutter_app/screens/authenticate/login_bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:your_list_flutter_app/services/auth.dart';
 
-class Authenticate extends StatefulWidget {
-  @override
-  _AuthenticateState createState() => _AuthenticateState();
-}
-
-class _AuthenticateState extends State<Authenticate> {
-
-  bool showSignIn = true;
-  bool goToEmail = false;
-  void toggleView(){
-    //print(showSignIn.toString());
-    setState(() => showSignIn = !showSignIn);
-  }
-  void toggleTypeToEmail(){
-    setState(() => goToEmail = !goToEmail);
-  }
+class Authenticate extends StatelessWidget {
+  final AuthService _authService;
+  Authenticate({Key key, @required AuthService authService})
+    : assert(authService != null),
+      _authService = authService,
+      super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if ( goToEmail) {
-      if (showSignIn) {
-        return SignIn(toggleView:  toggleView, toggleTypeToEmail: toggleTypeToEmail);
-      } else {
-        return Register(toggleView:  toggleView, toggleTypeToEmail: toggleTypeToEmail);
-      }
-    } else {
-      return GeneralAuth(toggleTypeToEmail: toggleTypeToEmail);
-    }
+    return Scaffold(
+      body: Center(
+        child: BlocProvider<LoginBloc>(
+          create: (context) => LoginBloc(authService: _authService),
+          child: GeneralAuth(authService: _authService),
+        ),
+      ),
+    );
   }
 }
