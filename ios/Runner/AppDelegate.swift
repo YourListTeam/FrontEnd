@@ -13,6 +13,3 @@ import Firebase
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }
-# I dont know if this is comment in swift but
-#TODO: I need someone with mac to test this out, got to iOS folder and run 'pod install'
-# https://firebase.google.com/docs/ios/setup?authuser=0#frameworks
