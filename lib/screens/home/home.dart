@@ -1,83 +1,85 @@
 //import 'package:chopper/chopper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-//import 'package:provider/provider.dart';
 
-//import 'package:chopper/chopper.dart';
-//import 'package:your_list_flutter_app/models/userService.dart';
-//import 'package:your_list_flutter_app/services/auth.dart';
+//import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:your_list_flutter_app/res/val/colors.dart';
+import 'package:provider/provider.dart';
 import 'package:your_list_flutter_app/authentication_block/authentication_bloc.dart';
+import 'package:your_list_flutter_app/models/lsit_model/listService.dart';
+import 'package:your_list_flutter_app/res/val/colors.dart';
+import 'package:your_list_flutter_app/screens/authenticate/login_bloc/bloc.dart';
+import 'package:your_list_flutter_app/screens/home/home_bloc/bloc.dart';
+import 'package:your_list_flutter_app/screens/splash_screen.dart';
+
+import 'home_list.dart';
 
 //import 'package:your_list_flutter_app/models/built_post.dart';
 //import 'package:built_collection/built_collection.dart';
 
 class Home extends StatelessWidget {
 //  final AuthService _auth = AuthService();
+  final String uid;
+  var theMap = new Map<dynamic, dynamic>();
+
+  Home({@required this.uid}) {
+    theMap["UUID"] = uid;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-          backgroundColor: AppColors.backgroundColor,
-          appBar: AppBar(
-            title: Text('Home'),
-            backgroundColor: AppColors.mainAppColor,
-            elevation: 0.0,
-            actions: <Widget>[
-              FlatButton.icon(
-                icon: Icon(Icons.account_circle),
-                label: Text('logout'),
-                onPressed: () {
-                  BlocProvider.of<AuthenticationBloc>(context).add(
-                    LoggedOut(),
-                  );
-                },
-              ),
-            ],
-          ),
-//          body: FutureBuilder<Response<BuiltList<BuiltPost>>>(
-//            // In real apps, use some sort of state management (BLoC is cool)
-//            // to prevent duplicate requests when the UI rebuilds
-//            future: Provider.of<UserService>(context).getPosts(),
-//            builder: (context, snapshot) {
-//              if (snapshot.connectionState == ConnectionState.done) {
-//                if (snapshot.hasError) {
-//                  return Center(
-//                    child: Text(
-//                      snapshot.error.toString(),
-//                      textAlign: TextAlign.center,
-//                      textScaleFactor: 1.3,
-//                    ),
-//                  );
-//                }
-//
-//                final posts = snapshot.data.body;
-//                print(posts);
-//                return _buildPosts(context, posts);
-//              } else {
-//                // Show a loading indicator while waiting for the posts
-//                return Center(
-//                  child: CircularProgressIndicator(),
-//                );
-//              }
-//            },
-//          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              print("Example");
-              // This is an example of how to use userService
-//              var theMap = new Map<dynamic, dynamic>();
-//              theMap["UUID"] = "d4cca862-6a4a-4020-9034-da6e4fcc12c4";
-              // TODO: remove this cannot be supported for testing with new Provider
-              // TODO: make a timer so that it calls to the server every so often or when user
-//              final responce = Provider.of<UserService>(context).getUser(theMap);
-//              AsyncSnapshot<http.Response> snapshot;
-//              responce.then((value) => print(value.body));
+    // Will need to apply bloc patter here just like in main and decide
+    // where to go using bloc patter
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+        backgroundColor: AppColors.mainAppColor,
+        elevation: 0.0,
+        actions: <Widget>[
+          FlatButton.icon(
+            icon: Icon(Icons.account_circle),
+            label: Text('logout'),
+            onPressed: () {
+              BlocProvider.of<AuthenticationBloc>(context).add(
+                LoggedOut(),
+              );
             },
-            tooltip: 'test responce',
-            child: Icon(Icons.add),
-          )),
+          ),
+        ],
+      ),
+      body: MultiProvider(
+        providers: [
+          BlocProvider<HomeListBloc>(
+            create: (context) => HomeListBloc(),
+          ),
+          Provider(
+            create: (_) => ListService.create(),
+            dispose: (context, ListService service) => service.client.dispose(),
+          ),
+
+        ],
+        child: BlocBuilder<HomeListBloc, HomeListState>(
+          builder: (context, state) {
+            if (state is ListState) {
+              return HomeList(theMap: this.theMap, uid: this.uid);
+            }
+            if (state is SearchState) {
+              print("Not implemented");
+            }
+            if (state is UserState) {
+              print("Not implemented");
+            }
+            return SplashScreen();
+          },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          print("Example");
+        },
+        tooltip: 'test responce',
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
