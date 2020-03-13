@@ -8,7 +8,7 @@ part 'lstBuilt.g.dart';
 
 abstract class BuiltMyList implements Built<BuiltMyList, BuiltMyListBuilder> {
   @nullable
-  int get lid;
+  String get lid;
 
   String get listname;
   String get colour;

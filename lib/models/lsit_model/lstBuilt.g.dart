@@ -29,7 +29,7 @@ class _$BuiltMyListSerializer implements StructuredSerializer<BuiltMyList> {
       result
         ..add('lid')
         ..add(serializers.serialize(object.lid,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -47,7 +47,7 @@ class _$BuiltMyListSerializer implements StructuredSerializer<BuiltMyList> {
       switch (key) {
         case 'lid':
           result.lid = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'listname':
           result.listname = serializers.deserialize(value,
@@ -66,7 +66,7 @@ class _$BuiltMyListSerializer implements StructuredSerializer<BuiltMyList> {
 
 class _$BuiltMyList extends BuiltMyList {
   @override
-  final int lid;
+  final String lid;
   @override
   final String listname;
   @override
@@ -119,9 +119,9 @@ class _$BuiltMyList extends BuiltMyList {
 class BuiltMyListBuilder implements Builder<BuiltMyList, BuiltMyListBuilder> {
   _$BuiltMyList _$v;
 
-  int _lid;
-  int get lid => _$this._lid;
-  set lid(int lid) => _$this._lid = lid;
+  String _lid;
+  String get lid => _$this._lid;
+  set lid(String lid) => _$this._lid = lid;
 
   String _listname;
   String get listname => _$this._listname;
