@@ -31,6 +31,12 @@ class _$BuiltMyListSerializer implements StructuredSerializer<BuiltMyList> {
         ..add(serializers.serialize(object.lid,
             specifiedType: const FullType(String)));
     }
+    if (object.uuid != null) {
+      result
+        ..add('uuid')
+        ..add(serializers.serialize(object.uuid,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -47,6 +53,10 @@ class _$BuiltMyListSerializer implements StructuredSerializer<BuiltMyList> {
       switch (key) {
         case 'lid':
           result.lid = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'uuid':
+          result.uuid = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'listname':
@@ -68,6 +78,8 @@ class _$BuiltMyList extends BuiltMyList {
   @override
   final String lid;
   @override
+  final String uuid;
+  @override
   final String listname;
   @override
   final String colour;
@@ -75,7 +87,8 @@ class _$BuiltMyList extends BuiltMyList {
   factory _$BuiltMyList([void Function(BuiltMyListBuilder) updates]) =>
       (new BuiltMyListBuilder()..update(updates)).build();
 
-  _$BuiltMyList._({this.lid, this.listname, this.colour}) : super._() {
+  _$BuiltMyList._({this.lid, this.uuid, this.listname, this.colour})
+      : super._() {
     if (listname == null) {
       throw new BuiltValueNullFieldError('BuiltMyList', 'listname');
     }
@@ -96,20 +109,23 @@ class _$BuiltMyList extends BuiltMyList {
     if (identical(other, this)) return true;
     return other is BuiltMyList &&
         lid == other.lid &&
+        uuid == other.uuid &&
         listname == other.listname &&
         colour == other.colour;
   }
 
   @override
   int get hashCode {
-    return $jf(
-        $jc($jc($jc(0, lid.hashCode), listname.hashCode), colour.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, lid.hashCode), uuid.hashCode), listname.hashCode),
+        colour.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('BuiltMyList')
           ..add('lid', lid)
+          ..add('uuid', uuid)
           ..add('listname', listname)
           ..add('colour', colour))
         .toString();
@@ -122,6 +138,10 @@ class BuiltMyListBuilder implements Builder<BuiltMyList, BuiltMyListBuilder> {
   String _lid;
   String get lid => _$this._lid;
   set lid(String lid) => _$this._lid = lid;
+
+  String _uuid;
+  String get uuid => _$this._uuid;
+  set uuid(String uuid) => _$this._uuid = uuid;
 
   String _listname;
   String get listname => _$this._listname;
@@ -136,6 +156,7 @@ class BuiltMyListBuilder implements Builder<BuiltMyList, BuiltMyListBuilder> {
   BuiltMyListBuilder get _$this {
     if (_$v != null) {
       _lid = _$v.lid;
+      _uuid = _$v.uuid;
       _listname = _$v.listname;
       _colour = _$v.colour;
       _$v = null;
@@ -159,7 +180,8 @@ class BuiltMyListBuilder implements Builder<BuiltMyList, BuiltMyListBuilder> {
   @override
   _$BuiltMyList build() {
     final _$result = _$v ??
-        new _$BuiltMyList._(lid: lid, listname: listname, colour: colour);
+        new _$BuiltMyList._(
+            lid: lid, uuid: uuid, listname: listname, colour: colour);
     replace(_$result);
     return _$result;
   }

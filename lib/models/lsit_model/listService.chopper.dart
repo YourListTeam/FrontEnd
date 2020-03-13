@@ -25,14 +25,6 @@ class _$ListService extends ListService {
   }
 
   @override
-  Future<Response<dynamic>> getList(Map<dynamic, dynamic> body) {
-    final $url = '/lists';
-    final $body = body;
-    final $request = Request('GET', $url, client.baseUrl, body: $body);
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
   Future<Response<dynamic>> postList(Map<dynamic, dynamic> body) {
     final $url = '/lists';
     final $body = body;

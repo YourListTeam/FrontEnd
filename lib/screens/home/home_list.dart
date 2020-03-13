@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:your_list_flutter_app/models/lsit_model/listService.dart';
 import 'package:your_list_flutter_app/models/lsit_model/lstBuilt.dart';
+import 'package:your_list_flutter_app/models/lsit_model/singleListService.dart';
 import 'package:your_list_flutter_app/screens/home/home_bloc/bloc.dart';
 
 class HomeList extends StatefulWidget {
@@ -43,7 +44,6 @@ class _HomeListState extends State<HomeList> {
         future: Provider.of<ListService>(context).getLists(body),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            print("wait what");
             if (snapshot.hasError) {
               print(snapshot.error);
               return Center(
@@ -58,21 +58,21 @@ class _HomeListState extends State<HomeList> {
             List <BuiltMyList> temp = new List<BuiltMyList>();
             print(posts);
             for(var i =0; i < posts.length; i++) {
-              Map <dynamic, dynamic> temp2 = new Map <dynamic,dynamic>();
+              Map temp2 = new Map ();
               // This is purely for testing purposes
               temp2["UUID"] = "d4cca862-6a4a-4020-9034-da6e4fcc12c4";
               temp2["LID"] = posts[i];
               print(temp2);
+              print(temp.whereType());
 
               // I'm not sure how to call request for each item in and it would wait
               // For each of them to come back
               // this will be more problematic as the list grows
-              Provider.of<ListService>(context)
+              Provider.of<SingleListService>(context)
                   .getList(temp2)
                   .then((value){
                     print(value.body);
-                    temp.add(BuiltMyList((b) => b..lid = value.body["lid"]
-                      ..listname = value.body["listname"]));
+                    temp.add(value.body);
 
                   }
                   );

@@ -15,8 +15,6 @@ abstract class ListService extends ChopperService{
   @Get(path: "/readable_lists")
   Future<Response<List<String>>> getLists(@Body() Map<dynamic, dynamic> body);
 
-  @Get()
-  Future<Response> getList(@Body() Map<dynamic, dynamic> body);
 
   @Post()
   Future<Response> postList(@Body() Map<dynamic, dynamic> body);
