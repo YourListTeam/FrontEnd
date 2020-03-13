@@ -1,11 +1,15 @@
 //import 'package:chopper/chopper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:your_list_flutter_app/screens/home/contactspage.dart';
 //import 'package:provider/provider.dart';
-
+import 'dart:async';
+import 'profilepage.dart';
+import 'listspage.dart';
 //import 'package:chopper/chopper.dart';
 //import 'package:your_list_flutter_app/models/userService.dart';
 //import 'package:your_list_flutter_app/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:your_list_flutter_app/models/userService.dart';
 import 'package:your_list_flutter_app/res/val/colors.dart';
 import 'package:your_list_flutter_app/authentication_block/authentication_bloc.dart';
 
@@ -18,66 +22,78 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Scaffold(
-          backgroundColor: AppColors.backgroundColor,
-          appBar: AppBar(
-            title: Text('Home'),
-            backgroundColor: AppColors.mainAppColor,
-            elevation: 0.0,
-            actions: <Widget>[
-              FlatButton.icon(
-                icon: Icon(Icons.account_circle),
-                label: Text('logout'),
-                onPressed: () {
-                  BlocProvider.of<AuthenticationBloc>(context).add(
-                    LoggedOut(),
-                  );
-                },
-              ),
-            ],
-          ),
-//          body: FutureBuilder<Response<BuiltList<BuiltPost>>>(
-//            // In real apps, use some sort of state management (BLoC is cool)
-//            // to prevent duplicate requests when the UI rebuilds
-//            future: Provider.of<UserService>(context).getPosts(),
-//            builder: (context, snapshot) {
-//              if (snapshot.connectionState == ConnectionState.done) {
-//                if (snapshot.hasError) {
-//                  return Center(
-//                    child: Text(
-//                      snapshot.error.toString(),
-//                      textAlign: TextAlign.center,
-//                      textScaleFactor: 1.3,
-//                    ),
-//                  );
-//                }
-//
-//                final posts = snapshot.data.body;
-//                print(posts);
-//                return _buildPosts(context, posts);
-//              } else {
-//                // Show a loading indicator while waiting for the posts
-//                return Center(
-//                  child: CircularProgressIndicator(),
-//                );
-//              }
-//            },
-//          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              print("Example");
-              // This is an example of how to use userService
-//              var theMap = new Map<dynamic, dynamic>();
-//              theMap["UUID"] = "d4cca862-6a4a-4020-9034-da6e4fcc12c4";
-              // TODO: remove this cannot be supported for testing with new Provider
-              // TODO: make a timer so that it calls to the server every so often or when user
-//              final responce = Provider.of<UserService>(context).getUser(theMap);
-//              AsyncSnapshot<http.Response> snapshot;
-//              responce.then((value) => print(value.body));
+        child: Scaffold(
+      backgroundColor: AppColors.backgroundColor,
+      appBar: AppBar(
+        title: Text('Home'),
+        backgroundColor: AppColors.mainAppColor,
+        elevation: 0.0,
+        actions: <Widget>[
+          FlatButton.icon(
+            icon: Icon(Icons.account_circle),
+            label: Text('logout'),
+            onPressed: () {
+              BlocProvider.of<AuthenticationBloc>(context).add(
+                LoggedOut(),
+              );
             },
-            tooltip: 'test responce',
-            child: Icon(Icons.add),
-          )),
+          ),
+        ],
+      ),
+      body: MyStatefulWidget(),
+    )
+//
+
+        );
+  }
+}
+
+class MyStatefulWidget extends StatefulWidget {
+  MyStatefulWidget({Key key}) : super(key: key);
+
+  @override
+  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  int _selectedIndex = 0;
+
+  final _widgetOptions = [
+    ListsPage(),
+    ContactsPage(),
+    ProfilePage(),
+  ];
+  void _bottomNavTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text("Home"),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.contacts),
+            title: Text("Contacts"),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            title: Text("Profile"),
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blue,
+        onTap: _bottomNavTapped,
+      ),
     );
   }
 }
