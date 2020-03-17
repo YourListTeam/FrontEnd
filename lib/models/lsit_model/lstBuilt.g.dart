@@ -25,6 +25,18 @@ class _$BuiltMyListSerializer implements StructuredSerializer<BuiltMyList> {
       serializers.serialize(object.colour,
           specifiedType: const FullType(String)),
     ];
+    if (object.LID != null) {
+      result
+        ..add('LID')
+        ..add(serializers.serialize(object.LID,
+            specifiedType: const FullType(String)));
+    }
+    if (object.UUID != null) {
+      result
+        ..add('UUID')
+        ..add(serializers.serialize(object.UUID,
+            specifiedType: const FullType(String)));
+    }
     if (object.lid != null) {
       result
         ..add('lid')
@@ -51,6 +63,14 @@ class _$BuiltMyListSerializer implements StructuredSerializer<BuiltMyList> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'LID':
+          result.LID = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'UUID':
+          result.UUID = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'lid':
           result.lid = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -76,6 +96,10 @@ class _$BuiltMyListSerializer implements StructuredSerializer<BuiltMyList> {
 
 class _$BuiltMyList extends BuiltMyList {
   @override
+  final String LID;
+  @override
+  final String UUID;
+  @override
   final String lid;
   @override
   final String uuid;
@@ -87,7 +111,8 @@ class _$BuiltMyList extends BuiltMyList {
   factory _$BuiltMyList([void Function(BuiltMyListBuilder) updates]) =>
       (new BuiltMyListBuilder()..update(updates)).build();
 
-  _$BuiltMyList._({this.lid, this.uuid, this.listname, this.colour})
+  _$BuiltMyList._(
+      {this.LID, this.UUID, this.lid, this.uuid, this.listname, this.colour})
       : super._() {
     if (listname == null) {
       throw new BuiltValueNullFieldError('BuiltMyList', 'listname');
@@ -108,6 +133,8 @@ class _$BuiltMyList extends BuiltMyList {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is BuiltMyList &&
+        LID == other.LID &&
+        UUID == other.UUID &&
         lid == other.lid &&
         uuid == other.uuid &&
         listname == other.listname &&
@@ -117,13 +144,18 @@ class _$BuiltMyList extends BuiltMyList {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, lid.hashCode), uuid.hashCode), listname.hashCode),
+        $jc(
+            $jc($jc($jc($jc(0, LID.hashCode), UUID.hashCode), lid.hashCode),
+                uuid.hashCode),
+            listname.hashCode),
         colour.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('BuiltMyList')
+          ..add('LID', LID)
+          ..add('UUID', UUID)
           ..add('lid', lid)
           ..add('uuid', uuid)
           ..add('listname', listname)
@@ -134,6 +166,14 @@ class _$BuiltMyList extends BuiltMyList {
 
 class BuiltMyListBuilder implements Builder<BuiltMyList, BuiltMyListBuilder> {
   _$BuiltMyList _$v;
+
+  String _LID;
+  String get LID => _$this._LID;
+  set LID(String LID) => _$this._LID = LID;
+
+  String _UUID;
+  String get UUID => _$this._UUID;
+  set UUID(String UUID) => _$this._UUID = UUID;
 
   String _lid;
   String get lid => _$this._lid;
@@ -155,6 +195,8 @@ class BuiltMyListBuilder implements Builder<BuiltMyList, BuiltMyListBuilder> {
 
   BuiltMyListBuilder get _$this {
     if (_$v != null) {
+      _LID = _$v.LID;
+      _UUID = _$v.UUID;
       _lid = _$v.lid;
       _uuid = _$v.uuid;
       _listname = _$v.listname;
@@ -181,7 +223,12 @@ class BuiltMyListBuilder implements Builder<BuiltMyList, BuiltMyListBuilder> {
   _$BuiltMyList build() {
     final _$result = _$v ??
         new _$BuiltMyList._(
-            lid: lid, uuid: uuid, listname: listname, colour: colour);
+            LID: LID,
+            UUID: UUID,
+            lid: lid,
+            uuid: uuid,
+            listname: listname,
+            colour: colour);
     replace(_$result);
     return _$result;
   }

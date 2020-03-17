@@ -1,13 +1,15 @@
 import 'dart:convert';
 
-import 'package:chopper/chopper.dart';
+//import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:your_list_flutter_app/models/lsit_model/built_myList.dart';
 import 'package:your_list_flutter_app/models/lsit_model/listService.dart';
 import 'package:your_list_flutter_app/models/lsit_model/lstBuilt.dart';
-import 'package:your_list_flutter_app/models/lsit_model/singleListService.dart';
 import 'package:your_list_flutter_app/screens/home/home_bloc/bloc.dart';
+
+import 'list_bloc/bloc.dart';
 
 class HomeList extends StatefulWidget {
   final String uid;
@@ -25,88 +27,106 @@ class _HomeListState extends State<HomeList> {
   String get uid => widget.uid;
 
   HomeListBloc _homeListBloc;
+  final _scrollController = ScrollController();
+  final _scrollThreshold = 200.0;
+  PostBloc _postBloc;
 
   @override
   void initState() {
     super.initState();
-    _homeListBloc = BlocProvider.of<HomeListBloc>(context);
-    // TODO : remove line below is here only for testing purposes
+    _scrollController.addListener(_onScroll);
+    _postBloc = BlocProvider.of<PostBloc>(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    Map <dynamic, dynamic> body = new Map <dynamic,dynamic>();
-    body["UUID"] = "d4cca862-6a4a-4020-9034-da6e4fcc12c4";
-    return FutureBuilder<Response<List<String>>>(
-        // In real apps, use some sort of state management (BLoC is cool)
-        // to prevent duplicate requests when the UI rebuilds
-        future: Provider.of<ListService>(context).getLists(body),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              print(snapshot.error);
-              return Center(
-                child: Text(
-                  snapshot.error.toString(),
-                  textAlign: TextAlign.center,
-                  textScaleFactor: 1.3,
-                ),
-              );
-            }
-            final posts = snapshot.data.body;
-            List <BuiltMyList> temp = new List<BuiltMyList>();
-            print(posts);
-            for(var i =0; i < posts.length; i++) {
-              Map temp2 = new Map ();
-              // This is purely for testing purposes
-              temp2["UUID"] = "d4cca862-6a4a-4020-9034-da6e4fcc12c4";
-              temp2["LID"] = posts[i];
-              print(temp2);
-              print(temp.whereType());
-
-              // I'm not sure how to call request for each item in and it would wait
-              // For each of them to come back
-              // this will be more problematic as the list grows
-              Provider.of<SingleListService>(context)
-                  .getList(temp2)
-                  .then((value){
-                    print(value.body);
-                    temp.add(value.body);
-
-                  }
-                  );
-            }
-            return _buildPosts(context, temp);
-          } else {
-            // Show a loading indicator while waiting for the posts
+    return BlocBuilder<PostBloc, PostState>(
+      builder: (context, state) {
+        if (state is PostError) {
+          return Center(
+            child: Text('failed to fetch posts'),
+          );
+        }
+        print("1");
+        if (state is PostLoaded) {
+          if (state.posts.isEmpty) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: Text('no posts'),
             );
           }
-        },
-
+          return ListView.builder(
+            padding: EdgeInsets.all(8),
+            itemBuilder: (BuildContext context, int index) {
+              return index >= state.posts.length
+                  ? BottomLoader()
+                  : PostWidget(post: state.posts[index]);
+            },
+            itemCount: state.hasReachedMax
+                ? state.posts.length
+                : state.posts.length + 1,
+            controller: _scrollController,
+          );
+        }
+        print("2");
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 
-  ListView _buildPosts(BuildContext context, List<BuiltMyList> posts) {
-    return ListView.builder(
-      itemCount: posts.length,
-      padding: EdgeInsets.all(8),
-      itemBuilder: (context, index) {
-        return Card(
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.position.pixels;
+    if (maxScroll - currentScroll <= _scrollThreshold) {
+      _postBloc.add(Fetch());
+    }
+  }
+}
+
+class BottomLoader extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      child: Center(
+        child: SizedBox(
+          width: 33,
+          height: 33,
+          child: CircularProgressIndicator(
+            strokeWidth: 1.5,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PostWidget extends StatelessWidget {
+  final UsrList post;
+
+  const PostWidget({Key key, @required this.post}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
           elevation: 4,
           child: ListTile(
             title: Text(
-              posts[index].listname,
+              post.title,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
 //            subtitle: ,
             onTap: () =>
-                print(posts[index].lid), //Todo: create single list state
+                print(post.id), //Todo: create single list state
+
           ),
-        );
-      },
     );
   }
 }

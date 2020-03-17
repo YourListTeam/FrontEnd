@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:your_list_flutter_app/authentication_block/authentication_bloc.dart';
 import 'package:your_list_flutter_app/models/lsit_model/listService.dart';
-import 'package:your_list_flutter_app/models/lsit_model/singleListService.dart';
 import 'package:your_list_flutter_app/res/val/colors.dart';
 import 'package:your_list_flutter_app/screens/authenticate/login_bloc/bloc.dart';
 import 'package:your_list_flutter_app/screens/home/home_bloc/bloc.dart';
+import 'package:your_list_flutter_app/screens/home/list_bloc/bloc.dart';
 import 'package:your_list_flutter_app/screens/splash_screen.dart';
+import 'package:http/http.dart' as http;
+
 
 import 'home_list.dart';
 
@@ -57,9 +59,8 @@ class Home extends StatelessWidget {
             create: (_) => ListService.create(),
             dispose: (context, ListService service) => service.client.dispose(),
           ),
-          Provider(
-            create: (_) => SingleListService.create(),
-            dispose: (context, SingleListService service) => service.client.dispose(),
+          BlocProvider<PostBloc>(
+            create:(context) => PostBloc(httpClient: http.Client(), context: context, lst:  ListService.create(), )..add(Fetch()),
           ),
 
         ],
