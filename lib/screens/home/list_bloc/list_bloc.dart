@@ -11,19 +11,19 @@ import 'package:your_list_flutter_app/models/lsit_model/built_myList.dart';
 import 'package:your_list_flutter_app/models/lsit_model/listService.dart';
 import 'package:your_list_flutter_app/screens/home/list_bloc/bloc.dart';
 
-class PostBloc extends Bloc<PostEvent, PostState> {
-  final http.Client httpClient;
+class ListBloc extends Bloc<ListEvent, UsrListState> {
   final BuildContext context;
-  String uuid = "";
+  String uuid;
   final ListService lst;
 
-  PostBloc({@required this.httpClient, @required this.context,@required this.lst});
+  ListBloc(
+      { @required this.context, @required this.lst, @required this.uuid});
 
   @override
-  Stream<PostState> transformEvents(
-      Stream<PostEvent> events,
-      Stream<PostState> Function(PostEvent event) next,
-      ) {
+  Stream<UsrListState> transformEvents(
+    Stream<ListEvent> events,
+    Stream<UsrListState> Function(ListEvent event) next,
+  ) {
     return super.transformEvents(
       events.debounceTime(
         Duration(milliseconds: 500),
@@ -33,28 +33,27 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   }
 
   @override
-  get initialState => PostUninitialized();
+  get initialState => UsrListUninitialized();
 
   @override
-  Stream<PostState> mapEventToState(PostEvent event) async* {
+  Stream<UsrListState> mapEventToState(ListEvent event) async* {
     final currentState = state;
     if (event is Fetch && !_hasReachedMax(currentState)) {
       try {
-        if (currentState is PostUninitialized) {
-          print("HEllo there");
+        if (currentState is UsrListUninitialized) {
           final posts = await _fetchPosts(0, 20);
-          print("HEllo there");
           yield PostLoaded(posts: posts, hasReachedMax: false);
           return;
         }
         if (currentState is PostLoaded) {
           final posts = await _fetchPosts(currentState.posts.length, 20);
+          print(posts.length);
           yield posts.isEmpty
               ? currentState.copyWith(hasReachedMax: true)
               : PostLoaded(
-            posts: currentState.posts + posts,
-            hasReachedMax: false,
-          );
+                  posts: currentState.posts + posts,
+                  hasReachedMax: false,
+                );
         }
       } catch (_) {
         yield PostError();
@@ -62,28 +61,30 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     }
   }
 
-  bool _hasReachedMax(PostState state) =>
+  bool _hasReachedMax(UsrListState state) =>
       state is PostLoaded && state.hasReachedMax;
 
   Future<List<UsrList>> _fetchPosts(int startIndex, int limit) async {
-    final response = await httpClient.get(
-        'https://jsonplaceholder.typicode.com/posts?_start=$startIndex&_limit=$limit');
-    Map<dynamic,dynamic> body = new Map();
-    body["UUID"] = "d4cca862-6a4a-4020-9034-da6e4fcc12c4";
-    final response2 = lst.getLists(body);
+    Map<dynamic, dynamic> body = new Map();
+    body["UUID"] ="d4cca862-6a4a-4020-9034-da6e4fcc12c4";// this.uuid;//
+    final response2 = await lst.getLists(body);
+    if( response2.statusCode == 200) {
+      List<String> value1 = response2.body;
 
-    print("hi");
-    print(response.body);
-    response2.whenComplete(() => response2.then((value) => print(value.body)));
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body) as List;
-      return data.map((rawPost) {
-        return UsrList(
-          id: rawPost['id'],
-          title: rawPost['title'],
-          body: rawPost['body'],
-        );
-      }).toList();
+      List<UsrList> my = new List();
+      for (var i = startIndex; i < value1.length; i++) {
+        body["LID"] = value1[i];
+        final l = await lst.getList(body);
+        if (l.statusCode == 200) {
+          my.add(new UsrList(
+              lid: l.body["lid"],
+              title: l.body["listname"],
+              colour: l.body["colour"],
+              date: l.body["modified"]
+          ));
+        }
+      }
+      return my;
     } else {
       throw Exception('error fetching posts');
     }

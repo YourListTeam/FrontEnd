@@ -24,9 +24,10 @@ class Home extends StatelessWidget {
   final String uid;
   var theMap = new Map<dynamic, dynamic>();
 
-  Home({@required this.uid}) {
-    theMap["UUID"] = uid;
-  }
+  Home({@required this.uid});
+//  {
+//    theMap["UUID"] = uid;
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +60,8 @@ class Home extends StatelessWidget {
             create: (_) => ListService.create(),
             dispose: (context, ListService service) => service.client.dispose(),
           ),
-          BlocProvider<PostBloc>(
-            create:(context) => PostBloc(httpClient: http.Client(), context: context, lst:  ListService.create(), )..add(Fetch()),
+          BlocProvider<ListBloc>(
+            create:(context) => ListBloc(context: context, lst:  ListService.create(), uuid: this.uid)..add(Fetch()),
           ),
 
         ],

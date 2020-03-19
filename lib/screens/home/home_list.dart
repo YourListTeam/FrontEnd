@@ -1,12 +1,9 @@
 import 'dart:convert';
 
-//import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:your_list_flutter_app/models/lsit_model/built_myList.dart';
-import 'package:your_list_flutter_app/models/lsit_model/listService.dart';
-import 'package:your_list_flutter_app/models/lsit_model/lstBuilt.dart';
 import 'package:your_list_flutter_app/screens/home/home_bloc/bloc.dart';
 
 import 'list_bloc/bloc.dart';
@@ -29,25 +26,24 @@ class _HomeListState extends State<HomeList> {
   HomeListBloc _homeListBloc;
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
-  PostBloc _postBloc;
+  ListBloc _postBloc;
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    _postBloc = BlocProvider.of<PostBloc>(context);
+    _postBloc = BlocProvider.of<ListBloc>(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PostBloc, PostState>(
+    return BlocBuilder<ListBloc, UsrListState>(
       builder: (context, state) {
         if (state is PostError) {
           return Center(
             child: Text('failed to fetch posts'),
           );
         }
-        print("1");
         if (state is PostLoaded) {
           if (state.posts.isEmpty) {
             return Center(
@@ -67,7 +63,6 @@ class _HomeListState extends State<HomeList> {
             controller: _scrollController,
           );
         }
-        print("2");
         return Center(
           child: CircularProgressIndicator(),
         );
@@ -124,7 +119,7 @@ class PostWidget extends StatelessWidget {
             ),
 //            subtitle: ,
             onTap: () =>
-                print(post.id), //Todo: create single list state
+                print(post.lid), //Todo: On tap move towards single list
 
           ),
     );

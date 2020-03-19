@@ -59,7 +59,8 @@ class MyApp extends StatelessWidget {
         Provider(
           create: (_) => UserService.create(),
           dispose: (context, UserService service) => service.client.dispose(),
-        ), // UserApi
+        ),
+
       ],
       child: MaterialApp(
         home:  BlocBuilder<AuthenticationBloc, AuthenticationState>(

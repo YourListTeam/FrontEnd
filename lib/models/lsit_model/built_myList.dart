@@ -7,15 +7,16 @@ import 'package:built_value/serializer.dart';
 import 'package:equatable/equatable.dart';
 
 class UsrList extends Equatable {
-  final int id;
+  final String lid;
   final String title;
-  final String body;
+  final String colour;
+  final String date;
 
-  const UsrList({this.id, this.title, this.body});
-
-  @override
-  List<Object> get props => [id, title, body];
+  const UsrList({this.title, this.colour, this.lid, this.date});
 
   @override
-  String toString() => 'Post { id: $id }';
+  List<Object> get props => [title, colour, lid];
+
+  @override
+  String toString() => 'Post { lid: $lid }';
 }

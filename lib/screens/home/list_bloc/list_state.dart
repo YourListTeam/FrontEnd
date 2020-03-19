@@ -2,18 +2,18 @@ import 'package:equatable/equatable.dart';
 import 'package:your_list_flutter_app/models/lsit_model/built_myList.dart';
 
 
-abstract class PostState extends Equatable {
-  const PostState();
+abstract class UsrListState extends Equatable {
+  const UsrListState();
 
   @override
   List<Object> get props => [];
 }
 
-class PostUninitialized extends PostState {}
+class UsrListUninitialized extends UsrListState {}
 
-class PostError extends PostState {}
+class PostError extends UsrListState {}
 
-class PostLoaded extends PostState {
+class PostLoaded extends UsrListState {
   final List<UsrList> posts;
   final bool hasReachedMax;
 
