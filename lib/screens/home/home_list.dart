@@ -33,40 +33,50 @@ class _HomeListState extends State<HomeList> {
     super.initState();
     _scrollController.addListener(_onScroll);
     _postBloc = BlocProvider.of<ListBloc>(context);
+    _postBloc.add(Fetch());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ListBloc, UsrListState>(
-      builder: (context, state) {
-        if (state is PostError) {
-          return Center(
-            child: Text('failed to fetch posts'),
-          );
-        }
-        if (state is PostLoaded) {
-          if (state.posts.isEmpty) {
+    return Scaffold(
+        body: BlocBuilder<ListBloc, UsrListState>(
+        builder: (context, state) {
+          if (state is PostError) {
             return Center(
-              child: Text('no posts'),
+              child: Text('failed to fetch posts'),
             );
           }
-          return ListView.builder(
-            padding: EdgeInsets.all(8),
-            itemBuilder: (BuildContext context, int index) {
-              return index >= state.posts.length
-                  ? BottomLoader()
-                  : PostWidget(post: state.posts[index]);
-            },
-            itemCount: state.hasReachedMax
-                ? state.posts.length
-                : state.posts.length + 1,
-            controller: _scrollController,
+          if (state is PostLoaded) {
+            if (state.posts.isEmpty) {
+              return Center(
+                child: Text('no posts'),
+              );
+            }
+            return ListView.builder(
+              padding: EdgeInsets.all(8),
+              itemBuilder: (BuildContext context, int index) {
+                return index >= state.posts.length
+                    ? BottomLoader()
+                    : PostWidget(post: state.posts[index]);
+              },
+              itemCount: state.hasReachedMax
+                  ? state.posts.length
+                  : state.posts.length + 1,
+              controller: _scrollController,
+            );
+          }
+          return Center(
+            child: CircularProgressIndicator(),
           );
-        }
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
+        },
+      ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            BlocProvider.of<HomeListBloc>(context).add(SwitchToListAdd());
+          },
+          tooltip: 'test response',
+          child: Icon(Icons.add),
+        )
     );
   }
 

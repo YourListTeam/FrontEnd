@@ -6,3 +6,7 @@ abstract class ListEvent extends Equatable {
 }
 
 class Fetch extends ListEvent {}
+
+class NewList extends ListEvent {}
+
+class SubmitList extends ListEvent {}

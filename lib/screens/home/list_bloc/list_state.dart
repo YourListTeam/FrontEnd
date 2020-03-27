@@ -7,7 +7,32 @@ abstract class UsrListState extends Equatable {
 
   @override
   List<Object> get props => [];
+
+  getMap() {
+  }
 }
+
+class NewForm extends UsrListState {
+  String uid;
+  String name;
+  String color;
+  NewForm({this.uid});
+
+  setState(color, name) {
+    this.color = color;
+    this.name = name;
+  }
+
+  getMap() {
+    Map<dynamic, dynamic> thismap = new Map();
+    thismap['listname'] = this.name;
+    thismap['Color'] = this.color;
+    thismap['UUID'] = this.uid;
+    return thismap;
+  }
+}
+
+class FormSuccess extends UsrListState {}
 
 class UsrListUninitialized extends UsrListState {}
 

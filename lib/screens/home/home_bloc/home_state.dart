@@ -14,3 +14,5 @@ class ListState extends HomeListState {}
 class UserState extends HomeListState {} //TODO: Implement the state
 
 class SearchState extends HomeListState {} //TODO: Implement the state
+
+class ListAdd extends HomeListState {} //TODO: Implement the state

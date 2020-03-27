@@ -32,17 +32,13 @@ class MyApp extends StatelessWidget {
   String _uuid;
 
   FutureOr _checkResponse (Response value, UserService prov, FirebaseUser usr){
-    print("hello");
-    print(null);
-    print(value.base.statusCode);
-    if(value.isSuccessful){
+    if(!value.isSuccessful){
       var postUsr = new Map<dynamic, dynamic>();
-
+      print("posting");
       postUsr["UUID"] = usr.uid;
       postUsr["email"] = usr.email;
       postUsr["name"] = usr.displayName;
       prov.postUser(postUsr).whenComplete(() => null).then((value) => print(value.statusCode));
-      
     }
   }
 
@@ -73,18 +69,14 @@ class MyApp extends StatelessWidget {
             var theMap = new Map<dynamic, dynamic>();
             // TODO: this is for adding user to our server need to fix a bit of logic and
             //
-//            _authService.getUser().whenComplete(() => null).then(
-//                (value){
-//              print("The uuid is");
-//              print(value.uid);
-//              theMap["UUID"] = value.uid;
-//              this._uuid = value.uid;
-//              print("Debug");
-//              print(theMap["UUID"]);
-//              var prov = Provider.of<UserService>(context,listen: false);
-//              final responce = prov.getUser(theMap);
-//              responce.whenComplete(() => null).then((value2) => _checkResponse(value2, prov, value));
-//            });
+            _authService.getUser().whenComplete(() => null).then(
+                (value){
+              theMap["UUID"] = value.uid;
+              this._uuid = value.uid;
+              var prov = Provider.of<UserService>(context,listen: false);
+              final response = prov.getUser(theMap);
+              response.whenComplete(() => null).then((value2) => _checkResponse(value2, prov, value));
+            });
 
             return Home(uid: _uuid,);
           }

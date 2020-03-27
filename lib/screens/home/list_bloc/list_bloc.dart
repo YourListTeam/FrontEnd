@@ -57,6 +57,22 @@ class ListBloc extends Bloc<ListEvent, UsrListState> {
         }
       } catch (_) {
         yield PostError();
+        return;
+      }
+    }
+    if (event is NewList) {
+        yield NewForm(uid: this.uuid);
+        return;
+    }
+    if (event is SubmitList) {
+      final response = await lst.postList(currentState.getMap());
+      print(response);
+      if (response.statusCode == 200) {
+        yield UsrListUninitialized();
+        return;
+      } else {
+        yield currentState;
+        return;
       }
     }
   }
@@ -66,7 +82,7 @@ class ListBloc extends Bloc<ListEvent, UsrListState> {
 
   Future<List<UsrList>> _fetchPosts(int startIndex, int limit) async {
     Map<dynamic, dynamic> body = new Map();
-    body["UUID"] ="d4cca862-6a4a-4020-9034-da6e4fcc12c4";// this.uuid;//
+    body["UUID"] = this.uuid;
     final response2 = await lst.getLists(body);
     if( response2.statusCode == 200) {
       List<String> value1 = response2.body;
