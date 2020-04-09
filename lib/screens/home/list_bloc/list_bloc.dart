@@ -60,6 +60,16 @@ class ListBloc extends Bloc<ListEvent, UsrListState> {
         return;
       }
     }
+    if (event is FreshFetch) {
+      try {
+        final posts = await _fetchPosts(0, 20);
+        yield PostLoaded(posts: posts, hasReachedMax: false);
+        return;
+      } catch (_) {
+        yield PostError();
+        return;
+      }
+    }
     if (event is NewList) {
         yield NewForm(uid: this.uuid);
         return;

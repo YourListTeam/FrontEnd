@@ -11,7 +11,6 @@ import 'package:your_list_flutter_app/screens/authenticate/login_bloc/bloc.dart'
 import 'package:your_list_flutter_app/screens/home/home_bloc/bloc.dart';
 import 'package:your_list_flutter_app/screens/home/list_bloc/bloc.dart';
 import 'package:your_list_flutter_app/screens/splash_screen.dart';
-import 'package:your_list_flutter_app/screens/home/add_list.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -76,9 +75,6 @@ class Home extends StatelessWidget {
             }
             if (state is UserState) {
               print("Not implemented");
-            }
-            if (state is ListAdd) {
-              return AddList(uid:this.uid);
             }
             return SplashScreen();
           },

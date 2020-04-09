@@ -15,5 +15,3 @@ class SwitchToHomeList extends HomeListEvent {}
 class SwitchToContacts extends HomeListEvent {}
 
 class SwitchToPreferences extends HomeListEvent {}
-
-class SwitchToListAdd extends HomeListEvent {}

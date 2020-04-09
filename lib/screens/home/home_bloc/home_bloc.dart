@@ -16,8 +16,6 @@ class HomeListBloc extends Bloc<HomeListEvent, HomeListState> {
       throw UnimplementedError("Contacts state not implemeted");
     } else if (event is SwitchToPreferences){
       throw UnimplementedError("Preferences state not implemented");
-    } else if (event is SwitchToListAdd) {
-      yield ListAdd();
     }
   }
 }

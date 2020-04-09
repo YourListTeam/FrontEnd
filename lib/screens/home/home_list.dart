@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:your_list_flutter_app/models/lsit_model/built_myList.dart';
 import 'package:your_list_flutter_app/screens/home/home_bloc/bloc.dart';
+import 'package:your_list_flutter_app/screens/home/listadd.dart';
 
 import 'list_bloc/bloc.dart';
 
@@ -55,13 +56,9 @@ class _HomeListState extends State<HomeList> {
             return ListView.builder(
               padding: EdgeInsets.all(8),
               itemBuilder: (BuildContext context, int index) {
-                return index >= state.posts.length
-                    ? BottomLoader()
-                    : PostWidget(post: state.posts[index]);
+                return PostWidget(post: state.posts[index]);
               },
-              itemCount: state.hasReachedMax
-                  ? state.posts.length
-                  : state.posts.length + 1,
+              itemCount: state.posts.length,
               controller: _scrollController,
             );
           }
@@ -71,8 +68,15 @@ class _HomeListState extends State<HomeList> {
         },
       ),
         floatingActionButton: FloatingActionButton(
+//          onPressed: () async {
+//            BlocProvider.of<HomeListBloc>(context).add(SwitchToListAdd());
+//          },
           onPressed: () async {
-            BlocProvider.of<HomeListBloc>(context).add(SwitchToListAdd());
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddListScreen(addRepository: _postBloc.lst, uid: uid)),
+            );
+            _postBloc.add(FreshFetch());
           },
           tooltip: 'test response',
           child: Icon(Icons.add),
