@@ -1,13 +1,10 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:your_list_flutter_app/authentication_block/authentication_bloc.dart';
 import 'package:your_list_flutter_app/models/item_model/built_myItem.dart';
 import 'package:your_list_flutter_app/models/list_model/built_myList.dart';
 import 'package:your_list_flutter_app/res/val/colors.dart';
-import 'package:your_list_flutter_app/screens/home/home_bloc/bloc.dart';
 
 import 'item_bloc/item_bloc.dart';
 import 'item_bloc/bloc.dart';

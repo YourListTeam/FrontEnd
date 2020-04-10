@@ -1,7 +1,5 @@
-//import 'package:chopper/chopper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-//import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:your_list_flutter_app/authentication_block/authentication_bloc.dart';
@@ -9,16 +7,13 @@ import 'package:your_list_flutter_app/models/item_model/itemService.dart';
 import 'package:your_list_flutter_app/models/list_model/listService.dart';
 import 'package:your_list_flutter_app/models/list_model/locationService.dart';
 import 'package:your_list_flutter_app/res/val/colors.dart';
-import 'package:your_list_flutter_app/screens/authenticate/login_bloc/bloc.dart';
 import 'package:your_list_flutter_app/screens/home/home_bloc/bloc.dart';
 import 'package:your_list_flutter_app/screens/home/list_bloc/bloc.dart';
 import 'package:your_list_flutter_app/screens/splash_screen.dart';
-import 'package:http/http.dart' as http;
 
 
 import 'home_list.dart';
 import 'item_bloc/item_bloc.dart';
-import 'item_bloc/item_event.dart';
 
 //import 'package:your_list_flutter_app/models/built_post.dart';
 //import 'package:built_collection/built_collection.dart';

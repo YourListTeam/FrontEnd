@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:chopper/chopper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:your_list_flutter_app/models/list_model/listService.dart';
 import 'package:your_list_flutter_app/screens/home/home.dart';
 import 'package:your_list_flutter_app/screens/splash_screen.dart';
 import 'package:your_list_flutter_app/services/auth.dart';
