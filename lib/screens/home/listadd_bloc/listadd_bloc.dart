@@ -52,6 +52,8 @@ class AddBloc extends Bloc<AddEvent, AddState> {
       yield* _mapAddressChangedToState(event.address);
     }else if (event is Submitted) {
       yield* _mapFormSubmittedToState(event.name, event.color, event.uid, event.locName, event.address);
+    }else if (event is Updated) {
+      yield* _mapFormUpdatedToState(event.name, event.color, event.uid, event.locName, event.address);
     }
   }
 
@@ -107,6 +109,40 @@ class AddBloc extends Bloc<AddEvent, AddState> {
       } else {
         yield AddState.failure();
       }
+    } catch (_) {
+      yield AddState.failure();
+    }
+  }
+
+  Stream<AddState> _mapFormUpdatedToState(
+      String name,
+      String color,
+      String uid,
+      String locName,
+      String address,
+      ) async* {
+    yield AddState.loading();
+    try {
+      Map<dynamic, dynamic> map = new Map();
+      map['listname'] = name;
+      map['Color'] = color;
+      map['UUID'] = uid;
+      map['Address'] = address;
+      map['Name'] = locName;
+      yield AddState.success();
+//      Response res = await _listService.postList(map);
+//      if (res.statusCode == 200) {
+//        map['LID'] = res.body['lid'];
+//        try {
+//          await _locationService.postLocation(map);
+//          yield AddState.success();
+//        } catch (_) {
+//          await _listService.deleteList(map);
+//          yield AddState.failure();
+//        }
+//      } else {
+//        yield AddState.failure();
+//      }
     } catch (_) {
       yield AddState.failure();
     }

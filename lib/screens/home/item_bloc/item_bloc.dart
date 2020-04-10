@@ -9,15 +9,19 @@ import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
 import 'package:your_list_flutter_app/models/item_model/built_myItem.dart';
 import 'package:your_list_flutter_app/models/item_model/itemService.dart';
+import 'package:your_list_flutter_app/models/list_model/listService.dart';
+import 'package:your_list_flutter_app/models/list_model/locationService.dart';
 import 'package:your_list_flutter_app/screens/home/item_bloc/bloc.dart';
 
 class ItemBloc extends Bloc<ItemEvent, UsrItemState> {
   final BuildContext context;
   String uuid;
   final ItemService item;
+  final ListService lst;
+  final LocationService location;
 
   ItemBloc(
-      { @required this.context, @required this.item, @required this.uuid});
+      { @required this.context, @required this.item, @required this.uuid, @required this.lst, @required this.location});
 
   @override
   Stream<UsrItemState> transformEvents(
@@ -41,10 +45,10 @@ class ItemBloc extends Bloc<ItemEvent, UsrItemState> {
     if (event is ItemFetch) {
       try {
         final posts = await _fetchPosts(event.props[0]);
-        yield PostLoaded(posts: posts);
+        yield ItemLoaded(posts: posts);
         return;
       } catch (_) {
-        yield PostError();
+        yield ItemError();
         return;
       }
     }

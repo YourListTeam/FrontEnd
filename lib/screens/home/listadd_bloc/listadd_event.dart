@@ -79,3 +79,28 @@ class Submitted extends AddEvent {
     return 'Submitted { name: $name, color: $color,  locName: $locName, address: $address }';
   }
 }
+
+
+class Updated extends AddEvent {
+  final String name;
+  final String color;
+  final String uid;
+  final String locName;
+  final String address;
+
+  const Updated({
+    @required this.name,
+    @required this.color,
+    @required this.uid,
+    @required this.locName,
+    @required this.address,
+  });
+
+  @override
+  List<Object> get props => [name, color, uid, locName, address];
+
+  @override
+  String toString() {
+    return 'Updated { name: $name, color: $color,  locName: $locName, address: $address }';
+  }
+}

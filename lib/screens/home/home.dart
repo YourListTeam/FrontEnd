@@ -76,7 +76,7 @@ class Home extends StatelessWidget {
             dispose: (context, ItemService service) => service.client.dispose(),
           ),
           BlocProvider<ItemBloc>(
-            create:(context) => ItemBloc(context: context, item:  ItemService.create(), uuid: this.uid),
+            create:(context) => ItemBloc(context: context, item:  ItemService.create(), uuid: this.uid, lst:  ListService.create(), location: LocationService.create()),
           ),
         ],
         child: BlocBuilder<HomeListBloc, HomeListState>(

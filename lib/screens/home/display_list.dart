@@ -7,8 +7,7 @@ import 'package:your_list_flutter_app/authentication_block/authentication_bloc.d
 import 'package:your_list_flutter_app/models/item_model/built_myItem.dart';
 import 'package:your_list_flutter_app/models/list_model/built_myList.dart';
 import 'package:your_list_flutter_app/res/val/colors.dart';
-import 'package:your_list_flutter_app/screens/home/home_bloc/bloc.dart';
-
+import 'package:your_list_flutter_app/screens/home/updatelist.dart';
 import 'item_bloc/item_bloc.dart';
 import 'item_bloc/bloc.dart';
 import 'itemadd.dart';
@@ -50,25 +49,36 @@ class _DisplayListState extends State<DisplayList> {
           elevation: 0.0,
           actions: <Widget>[
             FlatButton.icon(
-              icon: Icon(Icons.account_circle),
-              label: Text('logout'),
-              onPressed: () {
-                Navigator.pop(context);
-                BlocProvider.of<AuthenticationBloc>(context).add(
-                  LoggedOut(),
+              icon: Icon(Icons.update),
+              label: Text('update list'),
+              onPressed: () async {
+//                Navigator.pop(context);
+//                BlocProvider.of<AuthenticationBloc>(context).add(
+//                  LoggedOut(),
+//                );
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UpdateListScreen(addRepository: _itemBloc.lst, locRepository: _itemBloc.location, uid: uid, post: post)),
                 );
+//                  Navigator.push(context,
+//                      MaterialPageRoute(builder: (_) {
+//                        return BlocProvider.value(
+//                            value: BlocProvider.of<ListBloc>(context),
+//                            child: UpdateListScreen(addRepository: _listBloc.lst, locRepository: _listBloc.location, uid: uid));
+//                      })
+//                  );
               },
             ),
           ],
         ),
         body: BlocBuilder<ItemBloc, UsrItemState>(
         builder: (context, state) {
-          if (state is PostError) {
+          if (state is ItemError) {
             return Center(
               child: Text('failed to fetch posts'),
             );
           }
-          if (state is PostLoaded) {
+          if (state is ItemLoaded) {
             if (state.posts.length == 0) {
               return Center(
                 child: Text('no posts yet!'),

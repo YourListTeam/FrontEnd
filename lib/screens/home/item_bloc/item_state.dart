@@ -14,19 +14,19 @@ abstract class UsrItemState extends Equatable {
 
 class UsrItemUninitialized extends UsrItemState {}
 
-class PostError extends UsrItemState {}
+class ItemError extends UsrItemState {}
 
-class PostLoaded extends UsrItemState {
+class ItemLoaded extends UsrItemState {
   final List<UsrItem> posts;
 
-  const PostLoaded({
+  const ItemLoaded({
     this.posts
   });
 
-  PostLoaded copyWith({
+  ItemLoaded copyWith({
     List<UsrItem> posts,
   }) {
-    return PostLoaded(
+    return ItemLoaded(
       posts: posts ?? this.posts,
     );
   }

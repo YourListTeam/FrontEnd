@@ -13,6 +13,7 @@ class UsrList extends Equatable {
   final String date;
   final String hex;
   String location;
+  String address;
 
   UsrList({this.title, this.colour, this.lid, this.date, this.hex});
 

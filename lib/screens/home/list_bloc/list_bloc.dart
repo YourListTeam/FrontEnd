@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:provider/provider.dart';
@@ -92,19 +93,6 @@ class ListBloc extends Bloc<ListEvent, UsrListState> {
   bool _hasReachedMax(UsrListState state) =>
       state is PostLoaded && state.hasReachedMax;
 
-  locationWrapper(UsrList row, Map<dynamic, dynamic> body) {
-    try {
-      location.getLocation(new Map.from(body)).then((onValue) {
-        if (onValue.statusCode == 200) {
-          row.location = onValue.body['name'];
-        } else {
-          row.location = "";
-        }
-      });
-    } catch (_) {
-      row.location = "Error Getting Location";
-    }
-  }
 
   Future<List<UsrList>> _fetchPosts(int startIndex, int limit) async {
     Map<dynamic, dynamic> body = new Map();
@@ -126,7 +114,14 @@ class ListBloc extends Bloc<ListEvent, UsrListState> {
               hex: l.body["hex"],
           );
           my.add(listrow);
-          locationWrapper(listrow, new Map.from(body));
+          Response onValue = await location.getLocation(new Map.from(body));
+          if (onValue.statusCode == 200) {
+            listrow.location = onValue.body["name"];
+            listrow.address = onValue.body["addressname"];
+          } else {
+            listrow.location = "";
+            listrow.address = "";
+          }
         }
       }
       return my;
