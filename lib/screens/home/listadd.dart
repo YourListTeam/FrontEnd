@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:your_list_flutter_app/authentication_block/authentication_bloc.dart';
 import 'package:your_list_flutter_app/models/list_model/listService.dart';
+import 'package:your_list_flutter_app/models/list_model/locationService.dart';
 import 'package:your_list_flutter_app/screens/home/listadd_bloc/listadd_bloc.dart';
 import 'package:your_list_flutter_app/screens/home/listadd_bloc/listadd_state.dart';
 import 'package:your_list_flutter_app/res/val/colors.dart';
@@ -13,11 +14,13 @@ import 'listadd_bloc/listadd_event.dart';
 class AddListScreen extends StatelessWidget {
   final ListService _listService;
   final String uid;
+  final LocationService _locationService;
 
-  AddListScreen({Key key, @required ListService addRepository, String uid})
+  AddListScreen({Key key, @required ListService addRepository, String uid, @required LocationService locRepository})
       : assert(addRepository != null),
         _listService = addRepository,
         uid = uid,
+        _locationService = locRepository,
         super(key: key);
 
   @override
@@ -36,8 +39,8 @@ class AddListScreen extends StatelessWidget {
       ),
       body: Center(
         child: BlocProvider<AddBloc>(
-          create: (context) => AddBloc(listService: _listService),
-          child: Add(listService: _listService, uid: uid),
+          create: (context) => AddBloc(listService: _listService, locationService: _locationService),
+          child: Add(uid: uid),
         ),
       ),
     );
@@ -45,22 +48,21 @@ class AddListScreen extends StatelessWidget {
 }
 
 class Add extends StatefulWidget {
-  final ListService _listService;
   final String uid;
 
-  Add({@required ListService listService, String uid})
-      : assert(listService != null),
-        _listService = listService,
-        uid = uid;
+  Add({String uid})
+      : uid = uid;
 
   State<Add> createState() => _AddState();
 }
 
 class _AddState extends State<Add> {
-  ListService get _listService => widget._listService;
   String get uid => widget.uid;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _colorController = TextEditingController();
+  final TextEditingController _locNameController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+
 
   AddBloc _addBloc;
 
@@ -77,6 +79,8 @@ class _AddState extends State<Add> {
     _addBloc = BlocProvider.of<AddBloc>(context);
     _nameController.addListener(_onNameChanged);
     _colorController.addListener(_onColorChanged);
+    _locNameController.addListener(_onLocNameChanged);
+    _addressController.addListener(_onAddressChanged);
   }
 
   @override
@@ -149,6 +153,30 @@ class _AddState extends State<Add> {
                       return !state.isColorValid ? 'Invalid Color' : null;
                     },
                   ),
+                  TextFormField(
+                    controller: _locNameController,
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.add_location),
+                      labelText: 'List Location',
+                    ),
+                    autocorrect: true,
+                    autovalidate: true,
+                    validator: (_) {
+                      return !state.isLocNameValid ? 'Invalid Location' : null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _addressController,
+                    decoration: InputDecoration(
+                      icon: state.isAddressValid ? Icon(Icons.gps_fixed) : Icon(Icons.gps_not_fixed),
+                      labelText: 'Location Address',
+                    ),
+                    autocorrect: true,
+                    autovalidate: true,
+                    validator: (_) {
+                      return !state.isAddressValid ? 'Invalid Address' : null;
+                    },
+                  ),
                   ButtonTheme(
                       minWidth: 225.0,
                       height: 40.0,
@@ -191,11 +219,25 @@ class _AddState extends State<Add> {
     );
   }
 
+  void _onLocNameChanged() {
+    _addBloc.add(
+      LocNameChanged(locName: _locNameController.text),
+    );
+  }
+
+  void _onAddressChanged() {
+    _addBloc.add(
+      AddressChanged(address: _addressController.text),
+    );
+  }
+
   void _onFormSubmitted() {
     _addBloc.add(
       Submitted(
         name: _nameController.text,
         color: _colorController.text,
+        locName: _locNameController.text,
+        address: _addressController.text,
         uid: uid
       ),
     );

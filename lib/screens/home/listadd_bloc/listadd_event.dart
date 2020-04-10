@@ -32,22 +32,50 @@ class ColorChanged extends AddEvent {
   String toString() => 'ColorChanged { color: $color }';
 }
 
+class LocNameChanged extends AddEvent {
+  final String locName;
+
+  const LocNameChanged({@required this.locName});
+
+  @override
+  List<Object> get props => [locName];
+
+  @override
+  String toString() => 'LocNameChanged { color: $locName }';
+}
+
+class AddressChanged extends AddEvent {
+  final String address;
+
+  const AddressChanged({@required this.address});
+
+  @override
+  List<Object> get props => [address];
+
+  @override
+  String toString() => 'addressChanged { color: $address }';
+}
+
 class Submitted extends AddEvent {
   final String name;
   final String color;
   final String uid;
+  final String locName;
+  final String address;
 
   const Submitted({
     @required this.name,
     @required this.color,
     @required this.uid,
+    @required this.locName,
+    @required this.address,
   });
 
   @override
-  List<Object> get props => [name, color, uid];
+  List<Object> get props => [name, color, uid, locName, address];
 
   @override
   String toString() {
-    return 'Submitted { name: $name, color: $color }';
+    return 'Submitted { name: $name, color: $color,  locName: $locName, address: $address }';
   }
 }

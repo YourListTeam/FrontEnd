@@ -14,6 +14,10 @@ class Validators {
     r'^[a-zA-Z]{3,}$',
   );
 
+  static final RegExp _locationName = RegExp(
+    r'^.{3,}$',
+  );
+
   static isValidEmail(String email) {
     return _emailRegExp.hasMatch(email);
   }
@@ -28,5 +32,9 @@ class Validators {
 
   static isValidColor(String color) {
     return _colorName.hasMatch(color);
+  }
+
+  static isValidLocation(String locName) {
+    return _locationName.hasMatch(locName);
   }
 }

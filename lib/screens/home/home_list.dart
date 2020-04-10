@@ -76,7 +76,7 @@ class _HomeListState extends State<HomeList> {
           onPressed: () async {
             final result = await Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AddListScreen(addRepository: _postBloc.lst, uid: uid)),
+              MaterialPageRoute(builder: (context) => AddListScreen(addRepository: _postBloc.lst, locRepository: _postBloc.location, uid: uid)),
             );
             _postBloc.add(FreshFetch());
           },

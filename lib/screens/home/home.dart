@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:your_list_flutter_app/authentication_block/authentication_bloc.dart';
 import 'package:your_list_flutter_app/models/item_model/itemService.dart';
 import 'package:your_list_flutter_app/models/list_model/listService.dart';
+import 'package:your_list_flutter_app/models/list_model/locationService.dart';
 import 'package:your_list_flutter_app/res/val/colors.dart';
 import 'package:your_list_flutter_app/screens/authenticate/login_bloc/bloc.dart';
 import 'package:your_list_flutter_app/screens/home/home_bloc/bloc.dart';
@@ -63,8 +64,12 @@ class Home extends StatelessWidget {
             create: (_) => ListService.create(),
             dispose: (context, ListService service) => service.client.dispose(),
           ),
+          Provider(
+            create: (_) => LocationService.create(),
+            dispose: (context, LocationService service) => service.client.dispose(),
+          ),
           BlocProvider<ListBloc>(
-            create:(context) => ListBloc(context: context, lst:  ListService.create(), uuid: this.uid)..add(Fetch()),
+            create:(context) => ListBloc(context: context, lst:  ListService.create(), location: LocationService.create(), uuid: this.uid)..add(Fetch()),
           ),
           Provider(
             create: (_) => ItemService.create(),

@@ -21,6 +21,9 @@ abstract class ListService extends ChopperService{
   @Post()
   Future<Response> postList(@Body() Map<dynamic, dynamic> body);
 
+  @Delete()
+  Future<Response> deleteList(@Body() Map<dynamic, dynamic> body);
+
   static ListService create() {
     final client = ChopperClient(
       baseUrl: GlobalStrings.url,
