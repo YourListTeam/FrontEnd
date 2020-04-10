@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:your_list_flutter_app/models/lsit_model/listService.dart';
+import 'package:your_list_flutter_app/models/list_model/listService.dart';
 import '../../../validators.dart';
 import './bloc.dart';
 

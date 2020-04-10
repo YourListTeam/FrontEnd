@@ -3,46 +3,63 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:your_list_flutter_app/models/list_model/built_myList.dart';
+import 'package:your_list_flutter_app/authentication_block/authentication_bloc.dart';
+import 'package:your_list_flutter_app/models/item_model/built_myItem.dart';
+import 'package:your_list_flutter_app/res/val/colors.dart';
 import 'package:your_list_flutter_app/screens/home/home_bloc/bloc.dart';
-import 'package:your_list_flutter_app/screens/home/listadd.dart';
 
-import 'display_list.dart';
 import 'item_bloc/item_bloc.dart';
-import 'list_bloc/bloc.dart';
+import 'item_bloc/bloc.dart';
 
-class HomeList extends StatefulWidget {
+class DisplayList extends StatefulWidget {
   final String uid;
-  final Map<dynamic, dynamic> theMap;
+  final String lid;
+  final String name;
 
-  HomeList({this.theMap, this.uid});
+  DisplayList({this.lid, this.uid, this.name});
 
   @override
-  State<StatefulWidget> createState() => _HomeListState();
+  State<StatefulWidget> createState() => _DisplayListState();
 }
 
-class _HomeListState extends State<HomeList> {
-  Map<dynamic, dynamic> get theMap => widget.theMap;
-
+class _DisplayListState extends State<DisplayList> {
+  String get lid => widget.lid;
   String get uid => widget.uid;
+  String get name => widget.name;
 
-  HomeListBloc _homeListBloc;
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
-  ListBloc _postBloc;
+  ItemBloc _itemBloc;
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    _postBloc = BlocProvider.of<ListBloc>(context);
-    _postBloc.add(Fetch());
+    _itemBloc = BlocProvider.of<ItemBloc>(context);
+    _itemBloc.add(ItemFetch(lid: lid));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: BlocBuilder<ListBloc, UsrListState>(
+        appBar: AppBar(
+          title: Text(name),
+          backgroundColor: AppColors.mainAppColor,
+          elevation: 0.0,
+          actions: <Widget>[
+            FlatButton.icon(
+              icon: Icon(Icons.account_circle),
+              label: Text('logout'),
+              onPressed: () {
+                Navigator.pop(context);
+                BlocProvider.of<AuthenticationBloc>(context).add(
+                  LoggedOut(),
+                );
+              },
+            ),
+          ],
+        ),
+        body: BlocBuilder<ItemBloc, UsrItemState>(
         builder: (context, state) {
           if (state is PostError) {
             return Center(
@@ -50,7 +67,7 @@ class _HomeListState extends State<HomeList> {
             );
           }
           if (state is PostLoaded) {
-            if (state.posts.isEmpty) {
+            if (state.posts.length == 0) {
               return Center(
                 child: Text('no posts'),
               );
@@ -58,7 +75,7 @@ class _HomeListState extends State<HomeList> {
             return ListView.builder(
               padding: EdgeInsets.all(8),
               itemBuilder: (BuildContext context, int index) {
-                return PostWidget(post: state.posts[index], uid: this.uid);
+                return PostWidget(post: state.posts[index]);
               },
               itemCount: state.posts.length,
               controller: _scrollController,
@@ -70,16 +87,16 @@ class _HomeListState extends State<HomeList> {
         },
       ),
         floatingActionButton: FloatingActionButton(
-//          onPressed: () async {
-//            BlocProvider.of<HomeListBloc>(context).add(SwitchToListAdd());
-//          },
           onPressed: () async {
-            final result = await Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AddListScreen(addRepository: _postBloc.lst, uid: uid)),
-            );
-            _postBloc.add(FreshFetch());
+            print('hit');
           },
+//          onPressed: () async {
+//            final result = await Navigator.push(
+//              context,
+//              MaterialPageRoute(builder: (context) => AddListScreen(addRepository: _postBloc.lst, uid: uid)),
+//            );
+//            _postBloc.add(FreshFetch());
+//          },
           tooltip: 'test response',
           child: Icon(Icons.add),
         )
@@ -96,7 +113,7 @@ class _HomeListState extends State<HomeList> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      _postBloc.add(Fetch());
+        print('scrollin');
     }
   }
 }
@@ -120,10 +137,9 @@ class BottomLoader extends StatelessWidget {
 }
 
 class PostWidget extends StatelessWidget {
-  final UsrList post;
-  final String uid;
+  final UsrItem post;
 
-  const PostWidget({Key key, @required this.post, @required this.uid}) : super(key: key);
+  const PostWidget({Key key, @required this.post}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -131,21 +147,13 @@ class PostWidget extends StatelessWidget {
           elevation: 4,
           child: ListTile(
             title: Text(
-              post.title,
+              post.name,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
 //            subtitle: ,
-            onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) {
-                      return BlocProvider.value(
-                        value: BlocProvider.of<ItemBloc>(context),
-                        child: DisplayList(lid: post.lid, uid: uid, name: post.title));
-                    })
-                ),
-//                Navigator.push(
-//                  context,
-//                  MaterialPageRoute(builder: (context) => DisplayList(lid: post.lid, uid: uid)),
-//                ), //Todo: On tap move towards single list
+            onTap: () =>
+                print(post.iid), //Todo: On tap move towards single list
+
           ),
     );
   }

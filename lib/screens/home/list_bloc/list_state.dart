@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:your_list_flutter_app/models/lsit_model/built_myList.dart';
+import 'package:your_list_flutter_app/models/list_model/built_myList.dart';
 
 
 abstract class UsrListState extends Equatable {

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:your_list_flutter_app/authentication_block/authentication_bloc.dart';
-import 'package:your_list_flutter_app/models/lsit_model/listService.dart';
+import 'package:your_list_flutter_app/models/list_model/listService.dart';
 import 'package:your_list_flutter_app/screens/home/listadd_bloc/listadd_bloc.dart';
 import 'package:your_list_flutter_app/screens/home/listadd_bloc/listadd_state.dart';
 import 'package:your_list_flutter_app/res/val/colors.dart';
@@ -99,7 +99,6 @@ class _AddState extends State<Add> {
             );
         }
         if (state.isSuccess) {
-          //BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
           Navigator.of(context).pop('Yep!');
         }
         if (state.isFailure) {

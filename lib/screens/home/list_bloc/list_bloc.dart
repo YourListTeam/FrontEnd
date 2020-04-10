@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
-import 'package:your_list_flutter_app/models/lsit_model/built_myList.dart';
-import 'package:your_list_flutter_app/models/lsit_model/listService.dart';
+import 'package:your_list_flutter_app/models/list_model/built_myList.dart';
+import 'package:your_list_flutter_app/models/list_model/listService.dart';
 import 'package:your_list_flutter_app/screens/home/list_bloc/bloc.dart';
 
 class ListBloc extends Bloc<ListEvent, UsrListState> {
