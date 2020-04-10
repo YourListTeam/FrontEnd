@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import './bloc.dart';
 
+/// this bloc is used to manage which state
 class HomeListBloc extends Bloc<HomeListEvent, HomeListState> {
   @override
   HomeListState get initialState => ListState();

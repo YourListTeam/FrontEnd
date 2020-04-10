@@ -23,6 +23,8 @@ import 'item_bloc/item_event.dart';
 //import 'package:your_list_flutter_app/models/built_post.dart';
 //import 'package:built_collection/built_collection.dart';
 
+/// Main state shich used home block to manage which state should the ui
+/// go next
 class Home extends StatelessWidget {
 //  final AuthService _auth = AuthService();
   final String uid;
@@ -33,6 +35,11 @@ class Home extends StatelessWidget {
 //    theMap["UUID"] = uid;
 //  }
 
+  /// When we build this we ensure that eac child has all of the required
+  /// Services by using Provider which allows many other children to
+  /// services or any other classes specified in MultiProvider
+  /// This class also determines whether user's lists or users connections
+  /// should be displayed
   @override
   Widget build(BuildContext context) {
     // Will need to apply bloc patter here just like in main and decide

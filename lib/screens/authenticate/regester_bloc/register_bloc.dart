@@ -7,7 +7,8 @@ import '../../../validators.dart';
 import './bloc.dart';
 
 
-
+/// bloc responsible for managing registretion flow
+/// as soon as we get valid user from firebase we move on to home state
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final AuthService _authService;
 

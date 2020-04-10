@@ -11,6 +11,9 @@ import 'display_list.dart';
 import 'item_bloc/item_bloc.dart';
 import 'list_bloc/bloc.dart';
 
+/// Main state for ui connected to list state
+/// here is where all posts created, or shared with the user will be displayed
+///
 class HomeList extends StatefulWidget {
   final String uid;
   final Map<dynamic, dynamic> theMap;

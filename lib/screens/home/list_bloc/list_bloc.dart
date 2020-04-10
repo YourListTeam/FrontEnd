@@ -12,6 +12,8 @@ import 'package:your_list_flutter_app/models/list_model/listService.dart';
 import 'package:your_list_flutter_app/models/list_model/locationService.dart';
 import 'package:your_list_flutter_app/screens/home/list_bloc/bloc.dart';
 
+/// This bloc is used to get lists availible to user
+/// list will pool at max 20 items from the server and display them on th screen
 class ListBloc extends Bloc<ListEvent, UsrListState> {
   final BuildContext context;
   String uuid;

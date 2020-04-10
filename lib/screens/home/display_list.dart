@@ -13,6 +13,7 @@ import 'item_bloc/item_bloc.dart';
 import 'item_bloc/bloc.dart';
 import 'itemadd.dart';
 
+/// Ui part of displaying lists on screen
 class DisplayList extends StatefulWidget {
   final String uid;
   final UsrList post;

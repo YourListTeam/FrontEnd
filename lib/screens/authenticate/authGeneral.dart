@@ -12,7 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'login_bloc/login_bloc.dart';
 import 'login_bloc/login_event.dart';
 import 'login_bloc/login_state.dart';
-
+/// Main log in ui which mostly controls when infromation is sent to the server
+/// as well as checking for passwords and email validity using regex
 class GeneralAuth extends StatefulWidget {
   final AuthService _authService;
 

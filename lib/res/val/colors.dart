@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// Class to store colors used by the app
+///
+/// main usage of this class is to make sure that the whole ui
+/// uses same chroma
 class AppColors implements Colors {
   // App bar color
   static Color mainAppColor = Colors.blue[400];
