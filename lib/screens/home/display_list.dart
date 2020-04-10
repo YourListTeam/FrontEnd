@@ -1,17 +1,16 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
-import 'package:your_list_flutter_app/authentication_block/authentication_bloc.dart';
 import 'package:your_list_flutter_app/models/item_model/built_myItem.dart';
 import 'package:your_list_flutter_app/models/list_model/built_myList.dart';
 import 'package:your_list_flutter_app/res/val/colors.dart';
 import 'package:your_list_flutter_app/screens/home/updatelist.dart';
+
 import 'item_bloc/item_bloc.dart';
 import 'item_bloc/bloc.dart';
 import 'itemadd.dart';
 
+/// Ui part of displaying lists on screen
 class DisplayList extends StatefulWidget {
   final String uid;
   final UsrList post;
@@ -52,21 +51,10 @@ class _DisplayListState extends State<DisplayList> {
               icon: Icon(Icons.update),
               label: Text('update list'),
               onPressed: () async {
-//                Navigator.pop(context);
-//                BlocProvider.of<AuthenticationBloc>(context).add(
-//                  LoggedOut(),
-//                );
                 final result = await Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => UpdateListScreen(addRepository: _itemBloc.lst, locRepository: _itemBloc.location, uid: uid, post: post)),
                 );
-//                  Navigator.push(context,
-//                      MaterialPageRoute(builder: (_) {
-//                        return BlocProvider.value(
-//                            value: BlocProvider.of<ListBloc>(context),
-//                            child: UpdateListScreen(addRepository: _listBloc.lst, locRepository: _listBloc.location, uid: uid));
-//                      })
-//                  );
               },
             ),
           ],
@@ -162,7 +150,6 @@ class PostWidget extends StatelessWidget {
 //            subtitle: ,
             onTap: () =>
                 print(post.iid), //Todo: On tap move towards single list
-
           ),
     );
   }

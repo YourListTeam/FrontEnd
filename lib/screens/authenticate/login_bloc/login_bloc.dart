@@ -6,7 +6,9 @@ import 'package:your_list_flutter_app/services/auth.dart';
 import 'package:your_list_flutter_app/validators.dart';
 //import 'package:your_list_flutter_app/screens/authenticate/authGeneral.dart';
 import './bloc.dart';
-
+/// This bloc is used to mange the states of the log process
+/// using functionality as soon as we get response from firebase we move to home
+/// state
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   AuthService _userRepository;
 

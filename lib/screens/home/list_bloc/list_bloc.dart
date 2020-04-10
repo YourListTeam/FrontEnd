@@ -1,18 +1,17 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
-import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
 import 'package:your_list_flutter_app/models/list_model/built_myList.dart';
 import 'package:your_list_flutter_app/models/list_model/listService.dart';
 import 'package:your_list_flutter_app/models/list_model/locationService.dart';
 import 'package:your_list_flutter_app/screens/home/list_bloc/bloc.dart';
 
+/// This bloc is used to get lists availible to user
+/// list will pool at max 20 items from the server and display them on th screen
 class ListBloc extends Bloc<ListEvent, UsrListState> {
   final BuildContext context;
   String uuid;

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 //import 'authenticate.dart';
 import 'regester_bloc/register_event.dart';
-
+/// Registration ui
 class RegisterScreen extends StatelessWidget {
   final AuthService _authService;
 
