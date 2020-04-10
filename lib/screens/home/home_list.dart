@@ -119,6 +119,19 @@ class BottomLoader extends StatelessWidget {
   }
 }
 
+hexStringToHexInt(String hex) {
+  print(hex);
+  int val;
+  try {
+    hex = hex.replaceFirst('#', '');
+    hex = hex.length == 6 ? '55' + hex : hex;
+    val = int.parse(hex, radix: 16);
+  } catch (_) {
+    val = 0;
+  }
+  return val;
+}
+
 class PostWidget extends StatelessWidget {
   final UsrList post;
   final String uid;
@@ -129,17 +142,21 @@ class PostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
           elevation: 4,
+          color: Color(hexStringToHexInt(post.hex)),
           child: ListTile(
             title: Text(
               post.title,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-//            subtitle: ,
+            subtitle: Text(
+              post.location ?? "",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             onTap: () => Navigator.push(context,
                     MaterialPageRoute(builder: (_) {
                       return BlocProvider.value(
                         value: BlocProvider.of<ItemBloc>(context),
-                        child: DisplayList(lid: post.lid, uid: uid, name: post.title));
+                        child: DisplayList(post: post, uid: uid));
                     })
                 ),
 //              onTap: () => print(post.lid),

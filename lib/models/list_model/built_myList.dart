@@ -11,8 +11,10 @@ class UsrList extends Equatable {
   final String title;
   final String colour;
   final String date;
+  final String hex;
+  String location;
 
-  const UsrList({this.title, this.colour, this.lid, this.date});
+  UsrList({this.title, this.colour, this.lid, this.date, this.hex});
 
   @override
   List<Object> get props => [title, colour, lid];

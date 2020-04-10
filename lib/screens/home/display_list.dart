@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:your_list_flutter_app/authentication_block/authentication_bloc.dart';
 import 'package:your_list_flutter_app/models/item_model/built_myItem.dart';
+import 'package:your_list_flutter_app/models/list_model/built_myList.dart';
 import 'package:your_list_flutter_app/res/val/colors.dart';
 import 'package:your_list_flutter_app/screens/home/home_bloc/bloc.dart';
 
@@ -14,19 +15,18 @@ import 'itemadd.dart';
 
 class DisplayList extends StatefulWidget {
   final String uid;
-  final String lid;
-  final String name;
+  final UsrList post;
 
-  DisplayList({this.lid, this.uid, this.name});
+
+  DisplayList({this.post, this.uid});
 
   @override
   State<StatefulWidget> createState() => _DisplayListState();
 }
 
 class _DisplayListState extends State<DisplayList> {
-  String get lid => widget.lid;
+  UsrList get post => widget.post;
   String get uid => widget.uid;
-  String get name => widget.name;
 
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
@@ -37,15 +37,15 @@ class _DisplayListState extends State<DisplayList> {
     super.initState();
     _scrollController.addListener(_onScroll);
     _itemBloc = BlocProvider.of<ItemBloc>(context);
-    print(lid);
-    _itemBloc.add(ItemFetch(lid: lid));
+    print(post.lid);
+    _itemBloc.add(ItemFetch(lid: post.lid));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(name),
+          title: Text(post.title),
           backgroundColor: AppColors.mainAppColor,
           elevation: 0.0,
           actions: <Widget>[
@@ -92,9 +92,9 @@ class _DisplayListState extends State<DisplayList> {
           onPressed: () async {
             final result = await Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AddItemScreen(addRepository: _itemBloc.item, uid: uid, lid: lid)),
+              MaterialPageRoute(builder: (context) => AddItemScreen(addRepository: _itemBloc.item, uid: uid, lid: post.lid)),
             );
-            _itemBloc.add(ItemFetch(lid: lid));
+            _itemBloc.add(ItemFetch(lid: post.lid));
           },
           tooltip: 'test response',
           child: Icon(Icons.add),

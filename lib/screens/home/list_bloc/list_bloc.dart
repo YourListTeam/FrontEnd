@@ -92,6 +92,20 @@ class ListBloc extends Bloc<ListEvent, UsrListState> {
   bool _hasReachedMax(UsrListState state) =>
       state is PostLoaded && state.hasReachedMax;
 
+  locationWrapper(UsrList row, Map<dynamic, dynamic> body) {
+    try {
+      location.getLocation(new Map.from(body)).then((onValue) {
+        if (onValue.statusCode == 200) {
+          row.location = onValue.body['name'];
+        } else {
+          row.location = "";
+        }
+      });
+    } catch (_) {
+      row.location = "Error Getting Location";
+    }
+  }
+
   Future<List<UsrList>> _fetchPosts(int startIndex, int limit) async {
     Map<dynamic, dynamic> body = new Map();
     body["UUID"] = this.uuid;
@@ -104,12 +118,15 @@ class ListBloc extends Bloc<ListEvent, UsrListState> {
         body["LID"] = value1[i];
         final l = await lst.getList(body);
         if (l.statusCode == 200) {
-          my.add(new UsrList(
+          UsrList listrow = new UsrList(
               lid: l.body["lid"],
               title: l.body["listname"],
               colour: l.body["colour"],
-              date: l.body["modified"]
-          ));
+              date: l.body["modified"],
+              hex: l.body["hex"],
+          );
+          my.add(listrow);
+          locationWrapper(listrow, new Map.from(body));
         }
       }
       return my;
@@ -118,3 +135,4 @@ class ListBloc extends Bloc<ListEvent, UsrListState> {
     }
   }
 }
+

@@ -15,6 +15,9 @@ abstract class LocationService extends ChopperService{
   @Post()
   Future<Response> postLocation(@Body() Map<dynamic, dynamic> body);
 
+  @Get()
+  Future<Response> getLocation(@Body() Map<dynamic, dynamic> body);
+
   static LocationService create() {
     final client = ChopperClient(
       baseUrl: GlobalStrings.url,

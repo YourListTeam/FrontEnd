@@ -23,4 +23,12 @@ class _$LocationService extends LocationService {
     final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> getLocation(Map<dynamic, dynamic> body) {
+    final $url = '/location';
+    final $body = body;
+    final $request = Request('GET', $url, client.baseUrl, body: $body);
+    return client.send<dynamic, dynamic>($request);
+  }
 }
