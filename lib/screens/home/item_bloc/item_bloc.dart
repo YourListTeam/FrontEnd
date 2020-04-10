@@ -40,11 +40,9 @@ class ItemBloc extends Bloc<ItemEvent, UsrItemState> {
     final currentState = state;
     if (event is ItemFetch) {
       try {
-        if (currentState is UsrItemUninitialized) {
-          final posts = await _fetchPosts(event.props[0]);
-          yield PostLoaded(posts: posts);
-          return;
-        }
+        final posts = await _fetchPosts(event.props[0]);
+        yield PostLoaded(posts: posts);
+        return;
       } catch (_) {
         yield PostError();
         return;

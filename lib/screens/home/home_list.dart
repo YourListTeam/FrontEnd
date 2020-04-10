@@ -142,6 +142,7 @@ class PostWidget extends StatelessWidget {
                         child: DisplayList(lid: post.lid, uid: uid, name: post.title));
                     })
                 ),
+//              onTap: () => print(post.lid),
 //                Navigator.push(
 //                  context,
 //                  MaterialPageRoute(builder: (context) => DisplayList(lid: post.lid, uid: uid)),

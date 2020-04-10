@@ -10,6 +10,7 @@ import 'package:your_list_flutter_app/screens/home/home_bloc/bloc.dart';
 
 import 'item_bloc/item_bloc.dart';
 import 'item_bloc/bloc.dart';
+import 'itemadd.dart';
 
 class DisplayList extends StatefulWidget {
   final String uid;
@@ -36,6 +37,7 @@ class _DisplayListState extends State<DisplayList> {
     super.initState();
     _scrollController.addListener(_onScroll);
     _itemBloc = BlocProvider.of<ItemBloc>(context);
+    print(lid);
     _itemBloc.add(ItemFetch(lid: lid));
   }
 
@@ -69,7 +71,7 @@ class _DisplayListState extends State<DisplayList> {
           if (state is PostLoaded) {
             if (state.posts.length == 0) {
               return Center(
-                child: Text('no posts'),
+                child: Text('no posts yet!'),
               );
             }
             return ListView.builder(
@@ -88,15 +90,12 @@ class _DisplayListState extends State<DisplayList> {
       ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            print('hit');
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddItemScreen(addRepository: _itemBloc.item, uid: uid, lid: lid)),
+            );
+            _itemBloc.add(ItemFetch(lid: lid));
           },
-//          onPressed: () async {
-//            final result = await Navigator.push(
-//              context,
-//              MaterialPageRoute(builder: (context) => AddListScreen(addRepository: _postBloc.lst, uid: uid)),
-//            );
-//            _postBloc.add(FreshFetch());
-//          },
           tooltip: 'test response',
           child: Icon(Icons.add),
         )
