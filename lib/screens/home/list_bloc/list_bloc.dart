@@ -111,16 +111,10 @@ class ListBloc extends Bloc<ListEvent, UsrListState> {
               colour: l.body["colour"],
               date: l.body["modified"],
               hex: l.body["hex"],
+              location: l.body["name"] ?? "",
+              address: l.body["addressname"] ?? "",
           );
           my.add(listrow);
-          Response onValue = await location.getLocation(new Map.from(body));
-          if (onValue.statusCode == 200) {
-            listrow.location = onValue.body["name"];
-            listrow.address = onValue.body["addressname"];
-          } else {
-            listrow.location = "";
-            listrow.address = "";
-          }
         }
       }
       return my;

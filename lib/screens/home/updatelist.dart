@@ -88,8 +88,8 @@ class _UpdateState extends State<Update> {
     _addressController.addListener(_onAddressChanged);
     _nameController.text = list.title;
     _colorController.text = list.colour;
-    _locNameController.text = list.location;
-    _addressController.text = list.address;
+    _locNameController.text = list.location ?? "";
+    _addressController.text = list.address ?? "";
 
   }
 
