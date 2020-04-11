@@ -1,6 +1,6 @@
-# Project Title
+# YourList Front-End
 
-This is subfolder for the front-end of the YourList application. This is a Flutter application for the front end. 
+This is the subfolder for the front-end of the YourList application. This is a Flutter application for the front end. 
 
 ## Getting Started
 
@@ -10,9 +10,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 #### Flutter
 
-Flutter code is written in Dart, a client-oriented language. Installation instructions for the Dart SDk can be found in the offical [Dart documentation](https://dart.dev/get-dart)
+Flutter code is written in Dart, a client-oriented language. Installation instructions for the Dart SDK can be found in the official [Dart documentation](https://dart.dev/get-dart)
 
-In order to set up Flutter you can see the offical [Flutter documentation](https://flutter.dev/docs/get-started/install). Ensure Flutter is on your path by running the following command:
+To set up Flutter you can see the official [Flutter documentation](https://flutter.dev/docs/get-started/install). Ensure Flutter is on your path by running the following command:
 
 ```
 $ flutter --version
@@ -24,11 +24,11 @@ Tools • Dart 2.7.0
 
 #### Andriod Studio
 
-Android Studio is our reccomended IDE for working with Flutter. Andriod Studio is also required for setting up and running an Andriod Emulator. The instructions for installing Andriod Studio can be found on the [Andriod Studio site](https://developer.android.com/studio). We would also reccomend installing the Flutter plug-in and Dart plug-in for Andriod Studio.
+Android Studio is our recommended IDE for working with Flutter. Andriod Studio is also required for setting up and running an Andriod Emulator. The instructions for installing Andriod Studio can be found on the [Andriod Studio site](https://developer.android.com/studio). We would also recommend installing the Flutter plug-in and Dart plug-in for Andriod Studio.
 
 #### Gradle
 
-We utilize Gradle for build automation for the our application. Instructions for installing Gradle on your OS can be found on the [offical Gradle website](https://gradle.org/install/). Verify Gradle is installed by running the following command.
+We utilize Gradle to build automation for our application. Instructions for installing Gradle on your OS can be found on the [offical Gradle website](https://gradle.org/install/). Verify Gradle is installed by running the following command.
 
 ```
 $ gradle --version
@@ -49,7 +49,7 @@ OS:           Mac OS X 10.15.3 x86_64
 
 #### XCode
 
-XCode is optional for working with Flutter, but for running an iOS simulator, XCode is required. We will not go in depth for XCode, but instructions for setting up can be found [here](https://developer.apple.com/xcode/).
+XCode is optional for working with Flutter, but for running an iOS simulator, XCode is required. We will not go in-depth for XCode, but instructions for setting up can be found [here](https://developer.apple.com/xcode/).
 
 ### Installing
 
@@ -58,11 +58,11 @@ Before going further, ensure you run the `flutter doctor` command in your termin
 
 #### Google Sign-In - Andriod
 
-First import the YourListApp/andriod Andriod subfolder into Andriod Studio as a Gradle Project, note that this make a take a few minutes the first time. 
+First import the YourListApp/andriod Andriod subfolder into Andriod Studio as a Gradle Project, note that this may take a few minutes the first time. 
 
 ![](https://i.imgur.com/eVrwpX8.png)
 
-When it finishes all its processes open a Gradle tab (usually located on the right of the project) then locate ‘signingReport’ and run it by double clicking it.
+When it finishes all its processes open a Gradle tab (usually located on the right of the project) then locate ‘signingReport’ and run it by double-clicking it.
 
 ![](https://i.imgur.com/Gsb5oCK.png)
 
@@ -96,15 +96,15 @@ To begin development, import the YourListApp folder as a Gradle project. To run 
 
 ![](https://i.imgur.com/q9ftsfO.png)
 
-Then create an Virutal Device, and run it. This may take a few minutes to start up.
+Then create a Virtual Device, and run it. This may take a few minutes to start up.
 
 ![](https://i.imgur.com/zI1IYAA.png)
 
-Then you can the green play button, and Gradle will run and build the Flutter application. This will installed onto your emulator. For iOS testing, the process is similar, although the AVD Manager is not required. For this, the iOS Simulator must be used to create an emulator for an iOS device.
+Then you can the green play button, and Gradle will run and build the Flutter application. This will install the application onto your emulator. For iOS testing, the process is similar, although the AVD Manager is not required. For this, the iOS Simulator must be used to create an emulator for an iOS device.
 
 ![](https://i.imgur.com/Rtxdt3t.png)
 
-This requires installing [CocoaPods](https://cocoapods.org/). Verify CocoaPods is installed correctly, and then install required depdencies. This will install all dependencies into a `Pods` folder.
+This requires installing [CocoaPods](https://cocoapods.org/). Verify CocoaPods is installed correctly, and then install required dependencies. This will install all dependencies into a `Pods` folder.
 
 ```
 $ pod --version
@@ -113,13 +113,13 @@ $ cd YourListApp/ios
 $ pod install
 ```
 
-Furthermore, running the application will require updating the url parameter inside of the `YourListApp/lib/res/val/strings.dart`. Currently this is configured to point to our development server at `mcsapps.utm.utoronto.ca`. 
+Furthermore, running the application will require updating the URL parameter inside of the `YourListApp/lib/res/val/strings.dart`. Currently, this is configured to point to our development server at `mcsapps.utm.utoronto.ca`. 
 
 Running either the Andriod or iOS emulators requires setting up the Google Firebase Authentication. 
 
 ## Deployment
 
-For deployment on iOS, we will need to open xcode the same way as before, and he will need to create and set a Team for signing the application during development.
+For deployment on iOS, we will need to open XCode the same way as before, and he will need to create and set a Team for signing the application during development.
 
 ![](https://i.imgur.com/dPg1zDL.png)
 
@@ -155,4 +155,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * Thank you to Sadia Sharmin and Ilir Dema for your support in making this project possible!
-* Thank you Andrew Wang for all of your help in setting up the infrastructure for this project!
+* Thank you, Andrew Wang, for all of your help in setting up the infrastructure for this project!
